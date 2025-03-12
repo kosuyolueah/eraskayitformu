@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Paneli</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .delete-button {
+            color: red;
+            cursor: pointer;
+        }
+        .logout-button {
+            float: right;
+            margin-bottom: 20px;
+            padding: 10px 15px;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Admin Paneli</h1>
+    <button class="logout-button" onclick="logout()">Çıkış Yap</button>
+    <table id="dataTable">
+        <thead>
+            <tr>
+                <th>Adı Soyadı</th>
+                <th>E-posta</th>
+                <th>Telefon</th>
+                <th>Kurum</th>
+                <th>Ünvan</th>
+                <th>İşlem</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Veriler buraya eklenecek -->
+        </tbody>
+    </table>
+
+    <script>
+        const dataTable = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
+        let formDataArray = JSON.parse(localStorage.getItem('formDataArray')) || [];
+
+        function renderTable() {
+            dataTable.innerHTML = ''; // Mevcut içeriği temizle
+            formDataArray.forEach((data, index) => {
+                const row = dataTable.insertRow();
+                row.insertCell(0).innerText = data.adSoyad;
+                row.insertCell(1).innerText = data.email;
+                row.insertCell(2).innerText = data.telefon;
+                row.insertCell(3).innerText = data.kurum;
+                row.insertCell(4).innerText = data.unvan;
+                const deleteCell = row.insertCell(5);
+                const deleteButton = document.createElement('span');
+                deleteButton.innerText = 'Sil';
+                deleteButton.className = 'delete-button';
+                deleteButton.onclick = () => deleteRow(index);
+                deleteCell.appendChild(deleteButton);
+            });
+        }
+
+        function deleteRow(index) {
+            formDataArray.splice(index, 1); // Elemanı sil
+            localStorage.setItem('formDataArray', JSON.stringify(formDataArray)); // Güncellenmiş veriyi kaydet
+            renderTable(); // Tabloyu yeniden render et
+        }
+
+        function logout() {
+            // Çıkış işlemi için gerekli kodlar buraya eklenebilir
+            alert("Çıkış yapıldı!"); // Örnek bir çıkış mesajı
+            // Burada kullanıcıyı başka bir sayfaya yönlendirebilirsiniz
+            window.location.href = 'admingiris.html'; // Örneğin, giriş sayfasına yönlendirme
+        }
+
+        renderTable(); // Tabloyu ilk kez render et
+    </script>
+</body>
+</html>

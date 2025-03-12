@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styleee.css">
+    <title>Kayıt Formu</title>
+    
+
+
+
+    <body>
+    <h1>"ERAS"<h3>ÖNERMELERİ VE MULTİDİSİPLİNER SAĞLIK EKİBİNİN ETKİN ROLÜ SEMPOZYUMU
+    <h2>"Katılım Kayıt Formu"</h2>   
+    <form id="infoForm">
+        <label for="adSoyad">Adı Soyadı:</label>
+        <input type="text" id="adSoyad" name="adSoyad" required>
+
+        <label for="email">E-posta:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="telefon">Telefon Numarası:</label>
+        <input type="tel" id="telefon" name="telefon" required>
+
+        <label for="kurum">Çalıştığı Kurum:</label>
+        <input type="text" id="kurum" name="kurum" required>
+
+        <label for="unvan">Ünvan:</label>
+        <input type="text" id="unvan" name="unvan" required>
+
+        <button type="submit">Gönder</button>
+    </form>
+   
+    <script>
+        document.getElementById('infoForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Formun varsayılan gönderimini engelle
+
+            // Formdan verileri al
+            const adSoyad = document.getElementById('adSoyad').value;
+            const email = document.getElementById('email').value;
+            const telefon = document.getElementById('telefon').value;
+            const kurum = document.getElementById('kurum').value;
+            const unvan = document.getElementById('unvan').value;
+
+            // Verileri yerel depolamada al
+            let formDataArray = JSON.parse(localStorage.getItem('formDataArray')) || [];
+            const formData = {
+                adSoyad,
+                email,
+                telefon,
+                kurum,
+                unvan
+            };
+            formDataArray.push(formData);
+            localStorage.setItem('formDataArray', JSON.stringify(formDataArray));
+
+            // Formu sıfırla
+            document.getElementById('infoForm').reset();
+            alert("Veriler kaydedildi!");
+        });
+    </script>
+     <div class="image-container">
+        <img src="3.png" alt="Sol Resim" class="image">
+        <img src="4.png" alt="Sağ Resim" class="image">
+    </div>
+</body>
+</html>
